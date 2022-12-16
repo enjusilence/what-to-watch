@@ -163,3 +163,5 @@ function MyList(): JSX.Element {
     </div>
   );
 }
+
+export default MyList;

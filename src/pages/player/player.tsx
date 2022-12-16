@@ -34,3 +34,5 @@ function Player(): JSX.Element {
     </div>
   );
 }
+
+export default Player;
