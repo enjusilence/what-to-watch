@@ -1,11 +1,16 @@
+import { Link } from 'react-router-dom';
+
 type SmallFilmCardProps = {
   src: string;
   title: string;
+  filmID: number;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
-function SmallFilmCard({src, title}: SmallFilmCardProps): JSX.Element {
+function SmallFilmCard({src, title, filmID, onMouseEnter, onMouseLeave}: SmallFilmCardProps): JSX.Element {
   return (
-    <article className="small-film-card catalog__films-card">
+    <article onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
         <img
           src={src}
@@ -15,9 +20,9 @@ function SmallFilmCard({src, title}: SmallFilmCardProps): JSX.Element {
         />
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">
+        <Link to={`/films/${filmID}`} className="small-film-card__link">
           {title}
-        </a>
+        </Link>
       </h3>
     </article>
   );

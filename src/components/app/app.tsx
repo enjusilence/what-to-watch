@@ -6,6 +6,10 @@ import MainPage from '../../pages/main-page/main-page';
 import Page404 from '../../pages/page404/page404';
 import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/sign-in';
+import filmItem from '../../types/film-item';
+import videoItem from '../../types/video-item';
+import FilmDetails from '../film/details';
+import FilmOverview from '../film/overview';
 import IsSignedIn from '../is-signed-in/is-signed-in';
 
 type AppProps = {
@@ -13,16 +17,18 @@ type AppProps = {
   promoGenre: string;
   promoReleaseYear: string;
   userID: number;
+  filmCollection: filmItem[];
+  videoCollection: videoItem[];
 }
 
-function App(props: AppProps): JSX.Element {
+function App({promoTitle, promoGenre, promoReleaseYear, userID, filmCollection, videoCollection}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root}>
-          <Route index element={<MainPage promoGenre={props.promoGenre} promoReleaseYear={props.promoReleaseYear} promoTitle={props.promoTitle}/>}/>
-          <Route path={AppRoute.MyList} element={<IsSignedIn userID={props.userID}/>}/>
-          <Route path={AppRoute.Player} element={<Player />}/>
+          <Route index element={<MainPage promoGenre={promoGenre} promoReleaseYear={promoReleaseYear} promoTitle={promoTitle} filmCollection={filmCollection}/>}/>
+          <Route path={AppRoute.MyList} element={<IsSignedIn userID={userID} filmCollection={filmCollection}/>}/>
+          <Route path={AppRoute.Player} element={<Player videoCollection={videoCollection}/>}/>
           <Route path={AppRoute.SignIn} element={<SignIn />}/>
           <Route path={AppRoute.Films}>
             <Route index element={<Film />}/>
