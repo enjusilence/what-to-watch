@@ -146,6 +146,7 @@ function AddReviewForm(): JSX.Element {
             placeholder="Review text"
             defaultValue={''}
             onChange={fieldChangeHandle}
+            value={formData['review-text']}
           />
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">
