@@ -1,5 +1,6 @@
 type filmItem = {
-  src: string;
+  srcImage: string;
+  srcVideo: string;
   title: string;
   filmID: number;
 }

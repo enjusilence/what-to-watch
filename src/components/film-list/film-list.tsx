@@ -9,19 +9,19 @@ type FilmListProps = {
 function FilmList({filmCollection}: FilmListProps): JSX.Element {
   const [activeCardID, setActiveCardID] = React.useState(0);
 
-  function onMouseEnter(filmID: number): void {
+  const onMouseEnter = (filmID: number) => {
     setActiveCardID(filmID);
-  }
+  };
 
-  function onMouseLeave(): void {
+  const onMouseLeave = () => {
     setActiveCardID(0);
-  }
+  };
 
   return (
     <div className="catalog__films-list">
       {
         filmCollection.map(
-          ({src, title, filmID}) => <SmallFilmCard src={src} title={title} filmID={filmID} key={filmID} onMouseEnter={() => onMouseEnter(filmID)} onMouseLeave={onMouseLeave}/>
+          ({srcImage, srcVideo, title, filmID}) => <SmallFilmCard isActive={activeCardID === filmID} srcImage={srcImage} srcVideo={srcVideo} title={title} filmID={filmID} key={filmID} onMouseEnter={() => onMouseEnter(filmID)} onMouseLeave={onMouseLeave}/>
         )
       }
       <h1>{activeCardID}</h1>
