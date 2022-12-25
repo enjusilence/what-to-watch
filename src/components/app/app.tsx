@@ -8,8 +8,6 @@ import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/sign-in';
 import filmItem from '../../types/film-item';
 import videoItem from '../../types/video-item';
-import FilmDetails from '../film/details';
-import FilmOverview from '../film/overview';
 import IsSignedIn from '../is-signed-in/is-signed-in';
 
 type AppProps = {
@@ -31,7 +29,7 @@ function App({promoTitle, promoGenre, promoReleaseYear, userID, filmCollection, 
           <Route path={AppRoute.Player} element={<Player videoCollection={videoCollection}/>}/>
           <Route path={AppRoute.SignIn} element={<SignIn />}/>
           <Route path={AppRoute.Films}>
-            <Route index element={<Film />}/>
+            <Route index element={<Film filmCollection={filmCollection}/>}/>
             <Route path={AppRoute.AddReview} element={<AddReview />}/>
           </Route>
           <Route path='*' element={<Page404 />}/>

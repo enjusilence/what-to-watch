@@ -1,11 +1,6 @@
-type SmallFilmCardProps = {
-  srcImage: string;
-  srcVideo: string;
-  title: string;
-  filmID: number;
-}
+import filmItem from '../types/film-item';
 
-const filmCollection: SmallFilmCardProps[] = [
+const filmCollection: filmItem[] = [
   {
     srcImage: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     title: 'Fantastic Beasts: The Crimes of Grindelwald',
