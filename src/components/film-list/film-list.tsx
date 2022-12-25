@@ -4,9 +4,10 @@ import SmallFilmCard from '../small-film-card/small-film-card';
 
 type FilmListProps = {
   filmCollection: filmItem[];
+  cardAmount: number;
 }
 
-function FilmList({filmCollection}: FilmListProps): JSX.Element {
+function FilmList({filmCollection, cardAmount}: FilmListProps): JSX.Element {
   const [activeCardID, setActiveCardID] = React.useState(0);
 
   const onMouseEnter = (filmID: number) => {
@@ -20,11 +21,22 @@ function FilmList({filmCollection}: FilmListProps): JSX.Element {
   return (
     <div className="catalog__films-list">
       {
-        filmCollection.map(
-          ({srcImage, srcVideo, title, filmID}) => <SmallFilmCard isActive={activeCardID === filmID} srcImage={srcImage} srcVideo={srcVideo} title={title} filmID={filmID} key={filmID} onMouseEnter={() => onMouseEnter(filmID)} onMouseLeave={onMouseLeave}/>
+        filmCollection.slice(0, cardAmount).map(
+          ({srcImage, srcVideo, title, filmID}) =>
+            (
+              <SmallFilmCard
+                isActive={activeCardID === filmID}
+                srcImage={srcImage}
+                srcVideo={srcVideo}
+                title={title}
+                filmID={filmID}
+                key={filmID}
+                onMouseEnter={() => onMouseEnter(filmID)}
+                onMouseLeave={onMouseLeave}
+              />
+            )
         )
       }
-      <h1>{activeCardID}</h1>
     </div>
   );
 }

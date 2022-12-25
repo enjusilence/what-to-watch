@@ -134,7 +134,7 @@ function MainPage({promoTitle, promoGenre, promoReleaseYear, filmCollection}: Ma
               </a>
             </li>
           </ul>
-          <FilmList filmCollection={filmCollection}/>
+          <FilmList filmCollection={filmCollection} cardAmount={19}/>
           <div className="catalog__more">
             <button className="catalog__button" type="button">
               Show more
