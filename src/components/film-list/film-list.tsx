@@ -3,11 +3,11 @@ import filmItem from '../../types/film-item';
 import SmallFilmCard from '../small-film-card/small-film-card';
 
 type FilmListProps = {
-  filmCollection: filmItem[];
+  currentList: filmItem[];
   cardAmount: number;
 }
 
-function FilmList({filmCollection, cardAmount}: FilmListProps): JSX.Element {
+function FilmList({currentList, cardAmount}: FilmListProps): JSX.Element {
   const [activeCardID, setActiveCardID] = React.useState(0);
 
   const onMouseEnter = (filmID: number) => {
@@ -21,7 +21,7 @@ function FilmList({filmCollection, cardAmount}: FilmListProps): JSX.Element {
   return (
     <div className="catalog__films-list">
       {
-        filmCollection.slice(0, cardAmount).map(
+        currentList.slice(0, cardAmount).map(
           ({srcImage, srcVideo, title, filmID}) =>
             (
               <SmallFilmCard
