@@ -89,7 +89,7 @@ function Film({filmCollection}: FilmProps): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmList filmCollection={filmCollection} cardAmount={4}/>
+          <FilmList currentList={filmCollection} cardAmount={4}/>
         </section>
         <footer className="page-footer">
           <div className="logo">
