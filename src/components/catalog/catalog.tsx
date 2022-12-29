@@ -1,24 +1,21 @@
 import React from 'react';
-import store from '../../store';
+import { useSelector } from 'react-redux';
+import { store } from '../../store';
 import { clearGenreAction, setGenreAction } from '../../store/action';
-import FilmItem from '../../types/film-item';
+import { selectFilmCollection, selectFilmListSorted, selectGenre } from '../../store/selectors';
+import { FilmItems } from '../../types/film-item';
 import FilmList from '../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
 import ShowMore from './show-more/show-more';
 
-type CatalogProps = {
-  filmCollection: FilmItem[];
-}
+function Catalog(): JSX.Element {
+  const filmCollection: FilmItems = useSelector(selectFilmCollection);
+  const currentList: FilmItems = useSelector(selectFilmListSorted);
+  const currentGenre: string = useSelector(selectGenre);
 
-function Catalog({filmCollection}: CatalogProps): JSX.Element {
-  const getCurrentGenre = (): string => (store.getState().genre);
-  const getCurrentList = (): FilmItem[] => (store.getState().filmList);
-
-  const [currentGenre, setCurrentGenre] = React.useState(getCurrentGenre());
-  const [currentList, setCurrentList] = React.useState(getCurrentList());
   const [cardAmount, setCardAmount] = React.useState(8);
 
-  const isShowMoreVisible = (): boolean => (getCurrentList().length > cardAmount);
+  const isShowMoreVisible = (): boolean => (currentList.length > cardAmount);
 
   const handleOnClickGenreList = (genreName: string, evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     evt.preventDefault();
@@ -27,13 +24,11 @@ function Catalog({filmCollection}: CatalogProps): JSX.Element {
     } else {
       store.dispatch(setGenreAction(genreName));
     }
-    setCurrentGenre(getCurrentGenre());
-    setCurrentList(getCurrentList());
   };
 
   const handleOnClickShowMore = () => {
     setCardAmount(cardAmount + 8);
-  }
+  };
 
   return (
     <section className="catalog">

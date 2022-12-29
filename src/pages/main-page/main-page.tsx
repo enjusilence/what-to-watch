@@ -1,14 +1,16 @@
+import { useSelector } from 'react-redux';
 import Catalog from '../../components/catalog/catalog';
-import filmItem from '../../types/film-item';
+import { Spinner } from '../../components/spinner/spinner';
+import { selectFilmLoadingStatus } from '../../store/selectors';
 
 type MainPageProps = {
   promoTitle: string;
   promoGenre: string;
   promoReleaseYear: string;
-  filmCollection: filmItem[];
 }
 
-function MainPage({promoTitle, promoGenre, promoReleaseYear, filmCollection}: MainPageProps): JSX.Element {
+function MainPage({promoTitle, promoGenre, promoReleaseYear}: MainPageProps): JSX.Element {
+  const isFilmCollectionLoading: boolean = useSelector(selectFilmLoadingStatus);
 
   return (
     <>
@@ -80,7 +82,11 @@ function MainPage({promoTitle, promoGenre, promoReleaseYear, filmCollection}: Ma
         </div>
       </section>
       <div className="page-content">
-        <Catalog filmCollection={filmCollection}/>
+        {
+          isFilmCollectionLoading
+            ? <Spinner />
+            : <Catalog />
+        }
         <footer className="page-footer">
           <div className="logo">
             <a className="logo__link logo__link--light">

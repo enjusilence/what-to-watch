@@ -1,16 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import filmItem from '../../types/film-item';
+import { FilmItems } from '../../types/film-item';
 
 type GenreListProps = {
-  filmCollection: filmItem[];
+  filmCollection: FilmItems;
   currentGenre: string;
   handleOnClick: (genreName: string, evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 }
 
 function GenreList({filmCollection, currentGenre, handleOnClick}: GenreListProps): JSX.Element {
-  const genreList: string[] = ['All genres', ...new Set(filmCollection.map((item) => item.genre))].sort();
-
+  const genreList: string[] = ['All genres'].concat([...new Set(filmCollection.map((item) => item.genre))].sort());
 
   return (
     <ul className="catalog__genres-list">

@@ -1,14 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FilmList from '../../components/film-list/film-list';
 import FilmTabs from '../../components/film-tabs/film-tabs';
-import filmItem from '../../types/film-item';
+import { selectFilmCollection } from '../../store/selectors';
+import { FilmItems } from '../../types/film-item';
 
-type FilmProps = {
-  filmCollection: filmItem[];
-}
+function Film(): JSX.Element {
+  const filmCollection: FilmItems = useSelector(selectFilmCollection);
 
-function Film({filmCollection}: FilmProps): JSX.Element {
   return(
     <React.Fragment>
       <section className="film-card film-card--full">
