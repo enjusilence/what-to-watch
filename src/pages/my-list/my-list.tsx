@@ -1,11 +1,11 @@
+import { useSelector } from 'react-redux';
 import FilmList from '../../components/film-list/film-list';
-import filmItem from '../../types/film-item';
+import { selectFilmCollection } from '../../store/selectors';
+import { FilmItems } from '../../types/film-item';
 
-type MyListProps = {
-  filmCollection: filmItem[];
-}
+function MyList(): JSX.Element {
+  const filmCollection: FilmItems = useSelector(selectFilmCollection);
 
-function MyList({filmCollection}: MyListProps): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

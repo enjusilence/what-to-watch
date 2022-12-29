@@ -1,9 +1,9 @@
 import React from 'react';
-import filmItem from '../../types/film-item';
+import { FilmItems } from '../../types/film-item';
 import SmallFilmCard from '../small-film-card/small-film-card';
 
 type FilmListProps = {
-  currentList: filmItem[];
+  currentList: FilmItems;
   cardAmount: number;
 }
 
@@ -22,16 +22,16 @@ function FilmList({currentList, cardAmount}: FilmListProps): JSX.Element {
     <div className="catalog__films-list">
       {
         currentList.slice(0, cardAmount).map(
-          ({srcImage, srcVideo, title, filmID}) =>
+          ({previewImage, previewVideoLink, name, id}) =>
             (
               <SmallFilmCard
-                isActive={activeCardID === filmID}
-                srcImage={srcImage}
-                srcVideo={srcVideo}
-                title={title}
-                filmID={filmID}
-                key={filmID}
-                onMouseEnter={() => onMouseEnter(filmID)}
+                isActive={activeCardID === id}
+                srcImage={previewImage}
+                srcVideo={previewVideoLink}
+                title={name}
+                filmID={id}
+                key={id}
+                onMouseEnter={() => onMouseEnter(id)}
                 onMouseLeave={onMouseLeave}
               />
             )

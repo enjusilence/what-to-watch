@@ -1,5 +1,5 @@
 import React from 'react';
-import SmallFilmCardStatic from '../small-fill-card-static/small-film-card-static';
+import SmallFilmCardStatic from '../small-film-card-static/small-film-card-static';
 import VideoPlayer from '../video-player/video-player';
 
 type SmallFilmCardWrapperProps = {

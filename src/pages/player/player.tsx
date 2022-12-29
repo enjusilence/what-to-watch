@@ -1,13 +1,10 @@
 import videoItem from '../../types/video-item';
 
-type PlayerProps = {
-  videoCollection: videoItem[];
-}
 
-function Player({videoCollection}: PlayerProps): JSX.Element {
+function Player(): JSX.Element {
   return (
     <div className="player">
-      <video src={videoCollection[0].src} className="player__video" poster="img/player-poster.jpg" />
+      <video src={'#'} className="player__video" poster="img/player-poster.jpg" />
       <button type="button" className="player__exit">
         Exit
       </button>

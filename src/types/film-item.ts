@@ -1,9 +1,21 @@
-type FilmItem = {
-  srcImage: string;
-  srcVideo: string;
-  title: string;
-  filmID: number;
-  genre: string;
-}
+export type FilmItem = {
+  id: number
+  name: string
+  posterImage: string
+  previewImage: string
+  backgroundImage: string
+  backgroundColor: string
+  videoLink: string
+  previewVideoLink: string
+  description: string
+  rating: number
+  scoresCount: number
+  director: string
+  starring: [string]
+  runTime: number
+  genre: string
+  released: number
+  isFavorite: boolean
+  }
 
-export default FilmItem;
+export type FilmItems = FilmItem[];
