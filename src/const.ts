@@ -6,3 +6,5 @@ export enum AppRoute {
   AddReview = 'add-review',
   Root = '/',
 }
+
+export const TIMEOUT_SHOW_ERROR = 5000;
