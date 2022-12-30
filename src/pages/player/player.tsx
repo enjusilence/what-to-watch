@@ -1,6 +1,3 @@
-import videoItem from '../../types/video-item';
-
-
 function Player(): JSX.Element {
   return (
     <div className="player">

@@ -1306,6 +1306,7 @@ main {
   transition: 0.2s transform;
   transition: 0.2s transform, 0.2s -webkit-transform; }
   .small-film-card:hover {
+    cursor: pointer;
     z-index: 3;
     -webkit-transform: scale(1.2);
             transform: scale(1.2); }

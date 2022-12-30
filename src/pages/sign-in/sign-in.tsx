@@ -1,4 +1,32 @@
+import { ChangeEvent, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { store } from '../../store';
+import { loginAction } from '../../store/api-actions';
+import { selectAuthorizationStatus } from '../../store/selectors';
+
 function SignIn(): JSX.Element {
+  const [signInData, setSignInData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const isAuthorized: boolean = useSelector(selectAuthorizationStatus);
+
+  if (isAuthorized) {
+    return <Navigate to={AppRoute.Root} />;
+  }
+
+  const fieldChangeHandle = (evt: ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = evt.target;
+    setSignInData({...signInData, [name]: value});
+  };
+
+  const onSubmit = () => {
+    store.dispatch(loginAction(signInData));
+  };
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -16,10 +44,12 @@ function SignIn(): JSX.Element {
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
+                onChange={fieldChangeHandle}
+                value={signInData.email}
                 className="sign-in__input"
                 type="email"
                 placeholder="Email address"
-                name="user-email"
+                name="email"
                 id="user-email"
               />
               <label
@@ -31,10 +61,12 @@ function SignIn(): JSX.Element {
             </div>
             <div className="sign-in__field">
               <input
+                onChange={fieldChangeHandle}
+                value={signInData.password}
                 className="sign-in__input"
                 type="password"
                 placeholder="Password"
-                name="user-password"
+                name="password"
                 id="user-password"
               />
               <label
@@ -46,7 +78,7 @@ function SignIn(): JSX.Element {
             </div>
           </div>
           <div className="sign-in__submit">
-            <button className="sign-in__btn" type="submit">
+            <button onClick={() => onSubmit()} className="sign-in__btn" type="button">
               Sign in
             </button>
           </div>

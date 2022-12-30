@@ -1,12 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { FilmItems } from '../types/film-item';
-import { clearGenreAction, loadFilmCollection, setFilmLoadingStatus, setGenreAction } from './action';
+import { UserInfo } from '../types/user-info';
+import { clearGenreAction, loadFilmCollection, setAuthorizationStatus, setError, setFilmLoadingStatus, setGenreAction, setUserInfo } from './action';
 
 type InitialState = {
   genre: string;
   filmCollection: FilmItems;
   filmListSorted: FilmItems;
   isFilmCollectionLoading: boolean;
+  authorizationStatus: boolean;
+  userInfo: UserInfo;
+  error: string | null;
 };
 
 const initialState: InitialState = {
@@ -14,6 +18,15 @@ const initialState: InitialState = {
   filmCollection: [],
   filmListSorted: [],
   isFilmCollectionLoading: false,
+  authorizationStatus: false,
+  userInfo: {
+    avatarUrl: '',
+    email: '',
+    id: 0,
+    name: '',
+    token: '',
+  },
+  error: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -30,6 +43,12 @@ const reducer = createReducer(initialState, (builder) => {
       state.filmListSorted = action.payload;
     }).addCase(setFilmLoadingStatus, (state, action) => {
       state.isFilmCollectionLoading = action.payload;
+    }).addCase(setUserInfo, (state, action) => {
+      state.userInfo = action.payload;
+    }).addCase(setAuthorizationStatus, (state, action) => {
+      state.authorizationStatus = action.payload;
+    }).addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 

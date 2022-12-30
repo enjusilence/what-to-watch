@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SmallFilmCardWrapper from '../small-film-card-wrapper/small-film-card-wrapper';
 
 type SmallFilmCardProps = {
@@ -12,8 +12,11 @@ type SmallFilmCardProps = {
 }
 
 function SmallFilmCard({isActive, srcImage, srcVideo, title, filmID, onMouseEnter, onMouseLeave}: SmallFilmCardProps): JSX.Element {
+  const navigate = useNavigate();
+  const onMouseClick = () => navigate(`/films/${filmID}`);
+
   return (
-    <article onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className="small-film-card catalog__films-card">
+    <article onClick={onMouseClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
         <SmallFilmCardWrapper isActive={isActive} srcVideo={srcVideo} srcImage={srcImage} title={title} />
       </div>
