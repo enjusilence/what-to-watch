@@ -1,14 +1,45 @@
-import React from 'react';
+import { ChangeEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { api } from '../../store';
+import { ReviewComments } from '../../types/review-comment';
 
-function AddReviewForm(): JSX.Element {
-  const [formData, setFormData] = React.useState({
-    rating: '8',
+const COMMENT_LENGTH_MIN = 50;
+const COMMENT_LENGTH_MAX = 400;
+
+type AddReviewFormProps = {
+  filmID: number;
+};
+
+function AddReviewForm({filmID}: AddReviewFormProps): JSX.Element {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    rating: '0',
     'review-text': '',
   });
+  const [isFormSending, setIsFormSending] = useState(false);
 
-  const fieldChangeHandle = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+  const handleFieldChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const {name, value} = evt.target;
     setFormData({...formData, [name]: value});
+  };
+
+  const commentLength = formData['review-text'].length;
+  const isFormValid = (
+    commentLength >= COMMENT_LENGTH_MIN
+    && commentLength <= COMMENT_LENGTH_MAX
+    && formData.rating !== '0'
+    && !isFormSending
+  );
+
+  const handleOnSubmit = async (): Promise<void> => {
+    if (!isFormValid) {return;}
+    setIsFormSending(true);
+    try {
+      await api.post<ReviewComments>(`/comments/${filmID}`, {comment: formData['review-text'], rating: Number(formData.rating)});
+      navigate('../');
+    } catch (error) {
+      setIsFormSending(false);
+    }
   };
 
   return (
@@ -23,7 +54,7 @@ function AddReviewForm(): JSX.Element {
               name="rating"
               defaultValue={10}
               checked={formData.rating === '10'}
-              onChange={fieldChangeHandle}
+              onChange={handleFieldChange}
             />
             <label className="rating__label" htmlFor="star-10">
               Rating 10
@@ -35,7 +66,7 @@ function AddReviewForm(): JSX.Element {
               name="rating"
               defaultValue={9}
               checked={formData.rating === '9'}
-              onChange={fieldChangeHandle}
+              onChange={handleFieldChange}
             />
             <label className="rating__label" htmlFor="star-9">
               Rating 9
@@ -47,7 +78,7 @@ function AddReviewForm(): JSX.Element {
               name="rating"
               defaultValue={8}
               checked={formData.rating === '8'}
-              onChange={fieldChangeHandle}
+              onChange={handleFieldChange}
             />
             <label className="rating__label" htmlFor="star-8">
               Rating 8
@@ -59,7 +90,7 @@ function AddReviewForm(): JSX.Element {
               name="rating"
               defaultValue={7}
               checked={formData.rating === '7'}
-              onChange={fieldChangeHandle}
+              onChange={handleFieldChange}
             />
             <label className="rating__label" htmlFor="star-7">
               Rating 7
@@ -71,7 +102,7 @@ function AddReviewForm(): JSX.Element {
               name="rating"
               defaultValue={6}
               checked={formData.rating === '6'}
-              onChange={fieldChangeHandle}
+              onChange={handleFieldChange}
             />
             <label className="rating__label" htmlFor="star-6">
               Rating 6
@@ -83,7 +114,7 @@ function AddReviewForm(): JSX.Element {
               name="rating"
               defaultValue={5}
               checked={formData.rating === '5'}
-              onChange={fieldChangeHandle}
+              onChange={handleFieldChange}
             />
             <label className="rating__label" htmlFor="star-5">
               Rating 5
@@ -95,7 +126,7 @@ function AddReviewForm(): JSX.Element {
               name="rating"
               defaultValue={4}
               checked={formData.rating === '4'}
-              onChange={fieldChangeHandle}
+              onChange={handleFieldChange}
             />
             <label className="rating__label" htmlFor="star-4">
               Rating 4
@@ -107,7 +138,7 @@ function AddReviewForm(): JSX.Element {
               name="rating"
               defaultValue={3}
               checked={formData.rating === '3'}
-              onChange={fieldChangeHandle}
+              onChange={handleFieldChange}
             />
             <label className="rating__label" htmlFor="star-3">
               Rating 3
@@ -119,7 +150,7 @@ function AddReviewForm(): JSX.Element {
               name="rating"
               defaultValue={2}
               checked={formData.rating === '2'}
-              onChange={fieldChangeHandle}
+              onChange={handleFieldChange}
             />
             <label className="rating__label" htmlFor="star-2">
               Rating 2
@@ -131,7 +162,7 @@ function AddReviewForm(): JSX.Element {
               name="rating"
               defaultValue={1}
               checked={formData.rating === '1'}
-              onChange={fieldChangeHandle}
+              onChange={handleFieldChange}
             />
             <label className="rating__label" htmlFor="star-1">
               Rating 1
@@ -144,12 +175,11 @@ function AddReviewForm(): JSX.Element {
             name="review-text"
             id="review-text"
             placeholder="Review text"
-            defaultValue={''}
-            onChange={fieldChangeHandle}
+            onChange={handleFieldChange}
             value={formData['review-text']}
           />
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">
+            <button onClick={() => void handleOnSubmit()} className="add-review__btn" type="button" disabled={!isFormValid}>
               Post
             </button>
           </div>

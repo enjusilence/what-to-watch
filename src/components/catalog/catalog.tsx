@@ -6,7 +6,7 @@ import { selectFilmCollection, selectFilmListSorted, selectGenre } from '../../s
 import { FilmItems } from '../../types/film-item';
 import FilmList from '../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
-import ShowMore from './show-more/show-more';
+import ShowMore from '../catalog-show-more/catalog-show-more';
 
 function Catalog(): JSX.Element {
   const filmCollection: FilmItems = useSelector(selectFilmCollection);
