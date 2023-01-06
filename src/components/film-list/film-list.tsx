@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { FilmItems } from '../../types/film-item';
 import SmallFilmCard from '../small-film-card/small-film-card';
 
@@ -8,7 +8,7 @@ type FilmListProps = {
 }
 
 function FilmList({currentList, cardAmount}: FilmListProps): JSX.Element {
-  const [activeCardID, setActiveCardID] = React.useState(0);
+  const [activeCardID, setActiveCardID] = useState(0);
 
   const onMouseEnter = (filmID: number) => {
     setActiveCardID(filmID);

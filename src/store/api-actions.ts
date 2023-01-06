@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { store } from '.';
 import { TIMEOUT_SHOW_ERROR } from '../const';
-import { dropToken } from '../services/token';
+import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { FilmItems } from '../types/film-item';
 import { AppDispatch, State } from '../types/state';
@@ -54,6 +54,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   'user/login',
   async ({email, password}, {dispatch, extra: api}) => {
     const {data} = await api.post<UserInfo>('/login', {email, password});
+    saveToken(data.token);
     dispatch(setAuthorizationStatus(true));
     dispatch(setUserInfo(data));
   },

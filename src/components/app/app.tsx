@@ -32,7 +32,12 @@ function App({promoTitle, promoGenre, promoReleaseYear, userID}: AppProps): JSX.
           <Route path={AppRoute.SignIn} element={<SignIn />}/>
           <Route path={AppRoute.Films}>
             <Route index element={<Film />}/>
-            <Route path={AppRoute.AddReview} element={<AddReview />}/>
+            <Route path={AppRoute.AddReview} element={
+              <PrivateRoute>
+                <AddReview />
+              </PrivateRoute>
+            }
+            />
           </Route>
           <Route path='*' element={<Page404 />}/>
         </Route>
