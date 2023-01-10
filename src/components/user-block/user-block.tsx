@@ -29,12 +29,14 @@ export function UserBlock(): JSX.Element {
     <ul className="user-block">
       <li className="user-block__item">
         <div className="user-block__avatar">
-          <img
-            src={avatarUrl}
-            alt="User avatar"
-            width={63}
-            height={63}
-          />
+          <Link to={AppRoute.MyList}>
+            <img
+              src={avatarUrl}
+              alt="User avatar"
+              width={63}
+              height={63}
+            />
+          </Link>
         </div>
       </li>
       <li className="user-block__item">

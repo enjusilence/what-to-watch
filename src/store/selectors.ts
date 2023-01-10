@@ -12,6 +12,10 @@ export const selectFilmLoadingStatus = (state: State): boolean => (state.isFilmC
 
 export const selectAuthorizationStatus = (state: State): boolean => (state.authorizationStatus);
 
+export const selectPendingAuthorizationStatus = (state: State): boolean => (state.isAuthorizationStatusPending);
+
 export const selectUserInfo = (state: State): UserInfo => (state.userInfo);
 
 export const selectErrorMessage = (state: State): string | null => (state.error);
+
+export const selectUserFilmCollection = (state: State): FilmItems => (state.userFilmCollection);

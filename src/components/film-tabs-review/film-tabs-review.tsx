@@ -1,5 +1,5 @@
-import { ReviewComments } from '../../../../types/review-comment';
-import { FilmTabsReviewComment } from './film-tabs-review-comment/film-tabs-review-comment';
+import { ReviewComments } from '../../types/review-comment';
+import { FilmTabsReviewComment } from '../film-tabs-review-comment/film-tabs-review-comment';
 
 type FilmTabsReviewProps = {
   commentList: ReviewComments;

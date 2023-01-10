@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FilmItem } from '../../types/film-item';
 import { ReviewComments } from '../../types/review-comment';
-import FilmTabsContent from './film-tabs-content/film-tabs-content';
-import FilmTabsNav from './film-tabs-nav/film-tabs-nav';
+import FilmTabsContent from '../film-tabs-content/film-tabs-content';
+import FilmTabsNav from '../film-tabs-nav/film-tabs-nav';
 
 type FilmTabsProps = {
   filmInfo: FilmItem;

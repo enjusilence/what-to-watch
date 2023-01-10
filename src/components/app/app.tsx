@@ -21,7 +21,7 @@ function App({promoTitle, promoGenre, promoReleaseYear, userID}: AppProps): JSX.
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root}>
-          <Route index element={<MainPage promoGenre={promoGenre} promoReleaseYear={promoReleaseYear} promoTitle={promoTitle} />}/>
+          <Route index element={<MainPage />}/>
           <Route path={AppRoute.MyList} element={
             <PrivateRoute>
               <MyList />
