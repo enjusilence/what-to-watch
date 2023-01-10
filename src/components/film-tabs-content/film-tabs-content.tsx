@@ -1,8 +1,8 @@
-import { FilmItem } from '../../../types/film-item';
-import { ReviewComments } from '../../../types/review-comment';
-import FilmTabsDetails from './film-tabs-details/film-tabs-details';
-import FilmTabsOverview from './film-tabs-overview/film-tabs-overview';
-import FilmTabsReview from './film-tabs-review/film-tabs-review';
+import { FilmItem } from '../../types/film-item';
+import { ReviewComments } from '../../types/review-comment';
+import FilmTabsDetails from '../film-tabs-details/film-tabs-details';
+import FilmTabsOverview from '../film-tabs-overview/film-tabs-overview';
+import FilmTabsReview from '../film-tabs-review/film-tabs-review';
 
 type FilmTabsContentProps = {
   activeTab: string;

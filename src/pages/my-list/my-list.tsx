@@ -1,51 +1,38 @@
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import FilmList from '../../components/film-list/film-list';
-import { selectFilmCollection } from '../../store/selectors';
+import { Footer } from '../../components/footer/footer';
+import { Header, HeaderType } from '../../components/header/header';
+import { Logo } from '../../components/logo/logo';
+import { UserBlock } from '../../components/user-block/user-block';
+import { api } from '../../store';
 import { FilmItems } from '../../types/film-item';
 
 function MyList(): JSX.Element {
-  const filmCollection: FilmItems = useSelector(selectFilmCollection);
+  const [myFilmCollection, setMyFilmCollection] = useState<FilmItems>([]);
+
+  const fetchMyFilmCollection = async (): Promise<void> => {
+    const {data} = await api.get<FilmItems>('/favorite');
+    setMyFilmCollection(data);
+  };
+
+  useEffect(() => {
+    fetchMyFilmCollection();
+  }, []);
 
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
-        <div className="logo">
-          <a href="main.html" className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+      <Header headerType={HeaderType.UserPage}>
+        <Logo />
         <h1 className="page-title user-page__title">
-          My list <span className="user-page__film-count">9</span>
+          My list <span className="user-page__film-count">{myFilmCollection?.length}</span>
         </h1>
-        <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width={63} height={63} />
-            </div>
-          </li>
-          <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
-          </li>
-        </ul>
-      </header>
+        <UserBlock />
+      </Header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <FilmList currentList={filmCollection} cardAmount={9}/>
+        <FilmList currentList={myFilmCollection} cardAmount={16}/>
       </section>
-      <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

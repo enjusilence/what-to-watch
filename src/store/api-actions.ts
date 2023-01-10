@@ -7,7 +7,7 @@ import { AuthData } from '../types/auth-data';
 import { FilmItems } from '../types/film-item';
 import { AppDispatch, State } from '../types/state';
 import { UserInfo } from '../types/user-info';
-import { loadFilmCollection, setAuthorizationStatus, setError, setFilmLoadingStatus, setUserInfo } from './action';
+import { loadFilmCollection, setAuthorizationStatus, setError, setFilmLoadingStatus, setPendingAuthorizationStatus, setUserFilmCollection, setUserInfo } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'app/clearError',
@@ -40,9 +40,26 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<UserInfo>('/login');
-    dispatch(setAuthorizationStatus(true));
-    dispatch(setUserInfo(data));
+    dispatch(setPendingAuthorizationStatus(true));
+    try {
+      const {data} = await api.get<UserInfo>('/login');
+      dispatch(setAuthorizationStatus(true));
+      dispatch(setUserInfo(data));
+    } finally {
+      dispatch(setPendingAuthorizationStatus(false));
+    }
+  },
+);
+
+export const fetchUserFilmCollectionAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'user/fetchUserFilmCollection',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<FilmItems>('/favorite');
+    dispatch(setUserFilmCollection(data));
   },
 );
 

@@ -1,53 +1,60 @@
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Catalog from '../../components/catalog/catalog';
+import { Footer } from '../../components/footer/footer';
+import { Header, HeaderType } from '../../components/header/header';
+import { Logo } from '../../components/logo/logo';
+import { MyListButton } from '../../components/my-list-button/my-list-button';
 import { Spinner } from '../../components/spinner/spinner';
 import { UserBlock } from '../../components/user-block/user-block';
-import { selectFilmLoadingStatus } from '../../store/selectors';
+import { api } from '../../store';
+import { selectAuthorizationStatus, selectFilmLoadingStatus } from '../../store/selectors';
+import { FilmItem } from '../../types/film-item';
 
-type MainPageProps = {
-  promoTitle: string;
-  promoGenre: string;
-  promoReleaseYear: string;
-}
+function MainPage(): JSX.Element {
+  const [promoFilmInfo, setPromoFilmInfo] = useState<FilmItem | null>(null);
+  const isAuthorized = useSelector(selectAuthorizationStatus);
 
-function MainPage({promoTitle, promoGenre, promoReleaseYear}: MainPageProps): JSX.Element {
   const isFilmCollectionLoading: boolean = useSelector(selectFilmLoadingStatus);
+
+  const fetchPromoFilm = async (): Promise<void> => {
+    const {data} = await api.get<FilmItem>('/promo');
+    setPromoFilmInfo(data);
+  };
+
+  useEffect(() => {
+    fetchPromoFilm();
+  }, []);
 
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src="img/bg-the-grand-budapest-hotel.jpg"
-            alt="The Grand Budapest Hotel"
+            src={promoFilmInfo?.backgroundImage}
+            alt={promoFilmInfo?.name}
           />
         </div>
         <h1 className="visually-hidden">WTW</h1>
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+        <Header headerType={HeaderType.FilmCard}>
+          <Logo />
           <UserBlock />
-        </header>
+        </Header>
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src="img/the-grand-budapest-hotel-poster.jpg"
-                alt="The Grand Budapest Hotel poster"
+                src={promoFilmInfo?.posterImage}
+                alt={promoFilmInfo?.name}
                 width={218}
                 height={327}
               />
             </div>
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promoTitle}</h2>
+              <h2 className="film-card__title">{promoFilmInfo?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promoGenre}</span>
-                <span className="film-card__year">{promoReleaseYear}</span>
+                <span className="film-card__genre">{promoFilmInfo?.genre}</span>
+                <span className="film-card__year">{promoFilmInfo?.released}</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
@@ -56,13 +63,7 @@ function MainPage({promoTitle, promoGenre, promoReleaseYear}: MainPageProps): JS
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width={19} height={20}>
-                    <use xlinkHref="#add" />
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                {isAuthorized && (promoFilmInfo !== null) && <MyListButton filmID={promoFilmInfo.id} />}
               </div>
             </div>
           </div>
@@ -74,18 +75,7 @@ function MainPage({promoTitle, promoGenre, promoReleaseYear}: MainPageProps): JS
             ? <Spinner />
             : <Catalog />
         }
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

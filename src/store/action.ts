@@ -10,8 +10,12 @@ export const loadFilmCollection = createAction<FilmItems>('data/loadFilmCollecti
 
 export const setFilmLoadingStatus = createAction<boolean>('data/setFilmLoadingStatus');
 
+export const setUserFilmCollection = createAction<FilmItems>('user/setUserFilmCollection');
+
 export const setAuthorizationStatus = createAction<boolean>('authorization/setStatus');
 
-export const setUserInfo = createAction<UserInfo>('authorization/setUserInfo');
+export const setPendingAuthorizationStatus = createAction<boolean>('authorization/setPendingStatus');
+
+export const setUserInfo = createAction<UserInfo>('user/setUserInfo');
 
 export const setError = createAction<string | null>('app/setError');

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { store } from '../../store';
 import { clearGenreAction, setGenreAction } from '../../store/action';
@@ -13,7 +13,7 @@ function Catalog(): JSX.Element {
   const currentList: FilmItems = useSelector(selectFilmListSorted);
   const currentGenre: string = useSelector(selectGenre);
 
-  const [cardAmount, setCardAmount] = React.useState(8);
+  const [cardAmount, setCardAmount] = useState(8);
 
   const isShowMoreVisible = (): boolean => (currentList.length > cardAmount);
 
