@@ -1,20 +1,26 @@
+import { FC, useRef, useState } from 'react';
+import { FilmItem } from '../../types/film-item';
+import { VideoPlayerControls } from '../video-player-controls/video-player-controls';
+
 type VideoPlayerProps = {
-  src: string;
-  poster: string;
-  isMuted: boolean;
-}
+  filmInfo: FilmItem;
+};
 
-function VideoPlayer({src, poster, isMuted}: VideoPlayerProps): JSX.Element {
+export const VideoPlayer: FC<VideoPlayerProps> = ({filmInfo: {name, videoLink, previewImage}}) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
+  const [videoProgress, setVideoProgress] = useState(0);
+
+  const handleProgress = ({currentTarget : {currentTime}}: React.SyntheticEvent<HTMLVideoElement>) => {
+    setVideoProgress(currentTime);
+  };
+
+
   return (
-    <video
-      src={src}
-      poster={poster}
-      muted={isMuted}
-      width={280}
-      height={175}
-      autoPlay
-    />
+    <div ref={playerRef} className="player">
+      <video ref={videoRef} onTimeUpdate={(e) => handleProgress(e)} src={videoLink} className="player__video" poster={previewImage}/>
+      {(videoRef.current !== null && playerRef.current !== null
+        && <VideoPlayerControls videoRef={videoRef.current} playerRef={playerRef.current} name={name} videoProgress={videoProgress}/>)}
+    </div>
   );
-}
-
-export default VideoPlayer;
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 import SmallFilmCardStatic from '../small-film-card-static/small-film-card-static';
-import VideoPlayer from '../video-player/video-player';
+import VideoPlayer from '../video-player-mini/video-player-mini';
 
 type SmallFilmCardWrapperProps = {
   isActive: boolean;

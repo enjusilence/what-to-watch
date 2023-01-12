@@ -94,5 +94,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
       name: '',
       token: '',
     }));
+    dispatch(setUserFilmCollection([]));
   },
 );
