@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import { Header, HeaderType } from '../../components/header/header';
 import { Logo } from '../../components/logo/logo';
@@ -65,9 +66,9 @@ function AddReview(): JSX.Element {
               <nav className="breadcrumbs">
                 <ul className="breadcrumbs__list">
                   <li className="breadcrumbs__item">
-                    <a href="film-page.html" className="breadcrumbs__link">
+                    <Link to={`/films/${filmID}`} className="breadcrumbs__link">
                       {filmInfo.name}
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item">
                     <a className="breadcrumbs__link">Add review</a>

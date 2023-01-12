@@ -7,6 +7,7 @@ import { Footer } from '../../components/footer/footer';
 import { Header, HeaderType } from '../../components/header/header';
 import { Logo } from '../../components/logo/logo';
 import { MyListButton } from '../../components/my-list-button/my-list-button';
+import { PlayButton } from '../../components/play-button/play-button';
 import { Spinner } from '../../components/spinner/spinner';
 import { UserBlock } from '../../components/user-block/user-block';
 import { AppRoute } from '../../const';
@@ -80,12 +81,7 @@ function Film(): JSX.Element {
                   <span className="film-card__year">{filmInfo.released}</span>
                 </p>
                 <div className="film-card__buttons">
-                  <button className="btn btn--play film-card__button" type="button">
-                    <svg viewBox="0 0 19 19" width={19} height={19}>
-                      <use xlinkHref="#play-s" />
-                    </svg>
-                    <span>Play</span>
-                  </button>
+                  <PlayButton filmID={filmInfo.id} />
                   { isAuthorized && <MyListButton filmID={filmInfo.id} /> }
                   { isAuthorized &&
                     <Link to={AppRoute.AddReview} className="btn film-card__button">
